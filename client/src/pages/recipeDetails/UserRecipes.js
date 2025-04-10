@@ -140,7 +140,7 @@ function UserRecipes() {
                   <td>{recipe.cookingTime}</td>
                   <td>
                     <div className="action-buttons">
-                      <Link to={`/edit-recipe/${recipe.id}`} className="action-button edit">
+                      <Link to={`/editRecipe/${recipe.id}`} className="action-button edit">
                         <span className="material-icons">edit</span>
                       </Link>
                       <button

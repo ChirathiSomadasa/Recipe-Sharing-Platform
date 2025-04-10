@@ -12,6 +12,16 @@ export const fetchRecipes = async () => {
   }
 };
 
+// Fetch a specific recipe by ID
+export const fetchRecipe = async (recipeId) => {
+  try {
+    const response = await axios.get(`${API_URL}/recipes/${recipeId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Add a new recipe
 export const addRecipe = async (newRecipe) => {
   try {
