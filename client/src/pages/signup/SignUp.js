@@ -21,17 +21,18 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    // Retrieve existing users from local storage or initialize an empty array
+    // Retrieve existing users or initialize an empty array
     const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
   
     // Create a new user object
     const newUser = {
-      id: Date.now().toString(), // Generate a unique ID
+      id: Date.now().toString(),
       firstName: formData.firstName,
       lastName: formData.lastName,
-      email: formData.email,
+      mobileNumber: formData.mobileNumber,
+      email: formData.email.trim(), 
       password: formData.password,
-      favorites: [], // Initialize an empty favorites list
+      favorites: [],
     };
   
     // Add the new user to the existing users array
