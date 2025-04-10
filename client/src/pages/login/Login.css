@@ -147,7 +147,11 @@
 .signup-prompt .signup-link:hover {
   text-decoration: underline;
 }
-
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
 /* Responsive styles */
 @media (max-width: 480px) {
   .login-modal {

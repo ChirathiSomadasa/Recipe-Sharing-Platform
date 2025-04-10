@@ -63,7 +63,7 @@
   border-radius: 8px;
   font-size: 0.9rem;
   transition: border-color 0.3s;
-  width: 90% !important;
+  width: 100% !important;
 }
 .inputS {
   padding: 0.9rem;
@@ -152,7 +152,6 @@
 }
 
 .benefits li:before {
-  content: "✓";
   color: #f4a405;
   position: absolute;
   left: 0;
