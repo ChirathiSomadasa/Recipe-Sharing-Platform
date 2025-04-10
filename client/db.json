@@ -99,80 +99,36 @@
       }
     },
     {
-      "id": "R1744308557775",
-      "title": "Healthy Fruit Pancakes with Honey",
-      "description": "Delicious pancakes topped with fresh fruits and honey.",
-      "cookingTime": "25 mins",
-      "servings": "4",
-      "category": "breakfast",
-      "image": {},
-      "imagePreview": "blob:http://localhost:3000/fb4cb74c-9f3f-4e2c-8997-9b876688082c",
+      "id": "R1744314496057",
+      "title": "Vegan Chocolate Cake",
+      "description": "A rich and moist chocolate cake made without dairy or eggs.",
+      "cookingTime": "60 mins",
+      "servings": "8",
+      "category": "dessert",
+      "image": "blob:http://localhost:3000/f18ca6e7-6c9d-4f08-a09c-dc250fbf9cde",
+      "imagePreview": "blob:http://localhost:3000/0bbabb6e-5c18-4637-87ad-413d4e647fb3",
       "ingredients": [
-        "1 cup all-purpose flour",
-        "2 tablespoons sugar\"",
-        "1 teaspoon baking powder",
-        "1/2 teaspoon baking soda",
-        "1/4 teaspoon salt",
-        "1 cup buttermilk",
-        "1 large egg",
-        "2 tablespoons melted butter",
-        "1/2 teaspoon vanilla extract",
-        "Fresh fruits (blueberries, kiwi, orange slices, dragon fruit)",
-        "Honey"
+        "2 cups all-purpose flour",
+        "1 cup cocoa powder",
+        "1 1/2 cups sugar"
       ],
       "instructions": [
-        "In a large bowl, whisk together flour, sugar, baking powder, baking soda, and salt.",
-        "In another bowl, whisk together buttermilk, egg, melted butter, and vanilla extract.",
-        "Pour the wet ingredients into the dry ingredients and stir until just combined. Don't overmix.",
-        "Heat a non-stick pan or griddle over medium heat. Lightly grease with butter or cooking spray.",
-        "Pour 1/4 cup of batter onto the pan for each pancake. Cook until bubbles form on the surface, then flip and cook until golden brown.",
-        "Serve pancakes topped with fresh fruits and drizzle with honey."
-      ],
-      "tags": [
-        "healthy",
-        "breakfast"
-      ],
-      "nutrition": {
-        "calories": "250",
-        "protein": "10g",
-        "carbs": "30g",
-        "fat": "12g",
-        "fiber": "3g"
-      },
-      "createdAt": "2025-04-10T18:09:17.775Z"
-    },
-    {
-      "id": "R1744312997239",
-      "title": "Berry Smoothie Bowl",
-      "description": "A refreshing smoothie bowl packed with berries and granola.",
-      "cookingTime": "10 mins",
-      "servings": "2",
-      "category": "breakfast",
-      "image": "blob:http://localhost:3000/d922d7f5-9042-4e07-905d-f813cb545501",
-      "imagePreview": "blob:http://localhost:3000/a23532d7-a74a-4b2d-9e6a-86928752ef54",
-      "ingredients": [
-        "berries",
-        "banana",
-        "yogurt",
-        "granola"
-      ],
-      "instructions": [
-        "Blend berries, banana, and yogurt.",
-        "Pour into a bowl.",
-        "Top with granola."
+        "Preheat the oven to 350°F (175°C).",
+        "Mix dry ingredients in a large bowl...",
+        "Bake for 45 minutes."
       ],
       "tags": [
         "vegan",
-        "quick"
+        "dessert"
       ],
       "nutrition": {
-        "calories": "200",
-        "protein": "8g",
-        "carbs": "25g",
-        "fat": "5g",
+        "calories": "300",
+        "protein": "5g",
+        "carbs": "40g",
+        "fat": "15g",
         "fiber": "4g"
       },
-      "createdAt": "2025-04-10T19:23:17.239Z"
+      "createdAt": "2025-04-10T19:48:16.057Z"
     }
   ]
 }
