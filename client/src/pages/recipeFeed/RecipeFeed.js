@@ -61,7 +61,7 @@ function RecipeFeed() {
         {/* Hero Banner */}
         <div className="recipe-feed-hero">
           <div className="hero-content">
-            <div className="hero-promo">50% Off For All Premium Recipes</div>
+            <div className="hero-promo">Discover and Share Amazing Recipes Today!</div>
             <h1 className="hero-title">
               Enjoy Your <span className="highlight">Special</span> Delicious Meal
             </h1>

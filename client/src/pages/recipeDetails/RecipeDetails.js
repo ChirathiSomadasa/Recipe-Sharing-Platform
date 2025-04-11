@@ -1,9 +1,18 @@
+import React from "react";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { fetchRecipe } from "../../services/api";
 import { localStorageService } from "../../services/localStorage";
+import { ingredientSubstitutions } from "./ingredientSubstitutions";
 import "./RecipeDetails.css";
+
+// Helper function to format time
+const formatTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+};
 
 function RecipeDetails() {
   const { theme } = useContext(ThemeContext);
@@ -11,9 +20,9 @@ function RecipeDetails() {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  // Fetch favorite recipes
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+  const [timeLeft, setTimeLeft] = useState(0); // Timer state
+  const [isActive, setIsActive] = useState(false); // Timer active state
 
   useEffect(() => {
     // Load the list of favorite recipes from local storage
@@ -26,6 +35,10 @@ function RecipeDetails() {
         setLoading(true);
         const data = await fetchRecipe(id); // Fetch the recipe using the API
         setRecipe(data);
+
+        // Parse cooking time into seconds
+        const cookingTime = parseInt(data.cookingTime.split(" ")[0], 10) * 60; // Convert minutes to seconds
+        setTimeLeft(cookingTime); // Set initial timer value
       } catch (error) {
         console.error("Error fetching recipe:", error);
       } finally {
@@ -53,6 +66,28 @@ function RecipeDetails() {
     setIsFavorite(!isFavorite); // Toggle the favorite state
   };
 
+  // Start/Pause Timer
+  const handleTimer = () => {
+    if (isActive) {
+      clearInterval(timerInterval.current); // Pause the timer
+    } else {
+      timerInterval.current = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+    }
+    setIsActive(!isActive);
+  };
+
+  // Reset Timer
+  const resetTimer = () => {
+    clearInterval(timerInterval.current); // Clear the interval
+    const cookingTime = parseInt(recipe.cookingTime.split(" ")[0], 10) * 60; // Reset to original cooking time
+    setTimeLeft(cookingTime);
+    setIsActive(false);
+  };
+
+  const timerInterval = React.useRef(null);
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -79,6 +114,7 @@ function RecipeDetails() {
                 </span>
               ))}
             </div>
+
             <h1 className="recipe-title">{recipe.title}</h1>
             <div className="recipe-meta">
               <div className="recipe-meta-item">
@@ -145,7 +181,10 @@ function RecipeDetails() {
             </div>
           </div>
           <div className="recipe-hero-image">
-            <img src={recipe.image || recipe.imagePreview || "/placeholder.svg"} />
+            <img
+              src={recipe.image || recipe.imagePreview || "/placeholder.svg"}
+              alt={recipe.title}
+            />
             <div className="recipe-author">
               <span className="material-icons">person</span>
               <span>Recipe by {recipe.author}</span>
@@ -160,14 +199,40 @@ function RecipeDetails() {
               <span className="material-icons">shopping_basket</span>
               Ingredients
             </h2>
+            {/* Ingredient Substitutions Logic */}
             <ul className="ingredients-list">
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index} className="ingredient-item">
-                  <span className="material-icons check-icon">check_circle_outline</span>
-                  <span>{ingredient}</span>
-                </li>
-              ))}
+              {recipe.ingredients.map((ingredient, index) => {
+                const substitution = Object.keys(ingredientSubstitutions).find((key) =>
+                  ingredient.toLowerCase().includes(key)
+                );
+                return (
+                  <li key={index} className="ingredient-item">
+                    <span className="material-icons check-icon">check_circle_outline</span>
+                    <span>{ingredient}</span>
+                    {substitution ? (
+                      <span className="substitution-text">
+                        (Alternative: {ingredientSubstitutions[substitution]})
+                      </span>
+                    ) : (
+                      <span className="substitution-text">(No alternative available)</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
+            {/* Cooking Timer */}
+            <div className="cooking-timer-section">
+              <h3>Cooking Timer</h3>
+              <div className="timer-display">
+                <span>{formatTime(timeLeft)}</span>
+              </div>
+              <div className="timer-controls">
+                <button onClick={handleTimer}>
+                  {isActive ? "Pause" : "Start"}
+                </button>
+                <button onClick={resetTimer}>Reset</button>
+              </div>
+            </div>
             <div className="nutrition-facts">
               <h3>Nutrition Facts</h3>
               <div className="nutrition-grid">
