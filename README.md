@@ -6,14 +6,14 @@
 </head>
 <body>
   <header>
-    <h1>Cookilo: Recipe Sharing Platform</h1>
+    <h1>Cooklio: Recipe Sharing Platform</h1>
     <p>A simplified recipe-sharing platform built with React.</p>
   </header>
 
   <div class="section">
     <h2>Overview</h2>
     <p>
-      Cookilo is a recipe-sharing platform where users can browse recipes, save favorites, and contribute their own creations.
+      Cooklio is a recipe-sharing platform where users can browse recipes, save favorites, and contribute their own creations.
       The platform demonstrates modern React workflows, including client-side routing, state management, and API integration.
     </p>
   </div>

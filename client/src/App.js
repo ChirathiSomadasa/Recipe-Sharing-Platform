@@ -8,6 +8,7 @@ import RecipeFeed from "./pages/recipeFeed/RecipeFeed";
 import AddRecipeDetails from "./pages/recipeDetails/AddRecipeDetails";
 import UserRecipes from "./pages/recipeDetails/UserRecipes";
 import EditRecipeDetails from "./pages/recipeDetails/EditRecipeDetails";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/userRecipes" element={<UserRecipes />} />
       <Route path="/editRecipe/:id" element={<EditRecipeDetails />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
