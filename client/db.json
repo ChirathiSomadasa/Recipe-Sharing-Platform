@@ -143,56 +143,13 @@
       "id": "4R"
     },
     {
-      "id": "5R",
-      "title": "Garlic Butter Shrimp Pasta",
-      "description": "A quick and flavorful shrimp pasta dish tossed in garlic butter sauce.",
-      "cookingTime": "20 mins",
-      "servings": "3",
-      "category": "dinner",
-      "image": "/images/pasta.jpg",
-      "ingredients": [
-        "8 oz spaghetti or linguine",
-        "1 lb shrimp, peeled and deveined",
-        "3 tablespoons butter",
-        "4 cloves garlic, minced",
-        "1/2 teaspoon red pepper flakes (optional)",
-        "1/2 cup chicken broth",
-        "Juice of 1 lemon",
-        "1/4 cup chopped fresh parsley",
-        "Salt and pepper to taste",
-        "Grated Parmesan cheese (optional)"
-      ],
-      "instructions": [
-        "Cook the pasta according to package instructions until al dente. Drain and set aside.",
-        "In a large skillet, melt the butter over medium heat.",
-        "Add the minced garlic and red pepper flakes (if using). Sauté for 1-2 minutes until fragrant.",
-        "Add the shrimp to the skillet and cook for 2-3 minutes per side until pink and opaque. Remove the shrimp and set aside.",
-        "Pour the chicken broth into the skillet and stir to deglaze the pan, scraping up any browned bits.",
-        "Squeeze in the lemon juice and season with salt and pepper to taste.",
-        "Return the cooked shrimp and pasta to the skillet. Toss everything together to coat in the sauce.",
-        "Sprinkle with fresh parsley and serve hot. Optionally, garnish with grated Parmesan cheese."
-      ],
-      "tags": [
-        "quick",
-        "seafood",
-        "dinner"
-      ],
-      "nutrition": {
-        "calories": "350",
-        "protein": "25g",
-        "carbs": "40g",
-        "fat": "12g",
-        "fiber": "3g"
-      }
-    },
-    {
       "id": "R1744314496057",
       "title": "Vegan Chocolate Cake",
       "description": "A rich and moist chocolate cake made without dairy or eggs.",
       "cookingTime": "60 mins",
       "servings": "8",
       "category": "dessert",
-      "image": "blob:http://localhost:3000/f18ca6e7-6c9d-4f08-a09c-dc250fbf9cde",
+      "image": "/images/chocolate-cake.jpg",
       "imagePreview": "blob:http://localhost:3000/0bbabb6e-5c18-4637-87ad-413d4e647fb3",
       "ingredients": [
         "2 cups all-purpose flour",
@@ -223,7 +180,7 @@
       "cookingTime": "20 mins",
       "servings": "3",
       "category": "dinner",
-      "image": null,
+      "image": "/images/pasta.jpg",
       "imagePreview": "blob:http://localhost:3000/67bb93f2-5d33-4a54-901b-ebe8a15b9eb4",
       "ingredients": [
         "8 oz spaghetti or linguine",

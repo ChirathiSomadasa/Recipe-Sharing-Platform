@@ -403,3 +403,13 @@ textarea {
     justify-content: center;
   }
 }
+
+.bodyAR.light {
+  background-color: #fff8f3;
+  color: #000000;
+}
+
+.bodyAR.dark {
+  background-color: #767676;
+  color: #ffffff;
+}

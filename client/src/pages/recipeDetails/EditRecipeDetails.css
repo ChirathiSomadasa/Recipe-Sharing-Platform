@@ -1,5 +1,3 @@
-
-
 /* Google Material Icons Import */
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
@@ -403,4 +401,14 @@ textarea {
     width: 100%;
     justify-content: center;
   }
+}
+
+.bodyER.light {
+  background-color: #fff8f3;
+  color: #000000;
+}
+
+.bodyER.dark {
+  background-color: #767676;
+  color: #ffffff;
 }

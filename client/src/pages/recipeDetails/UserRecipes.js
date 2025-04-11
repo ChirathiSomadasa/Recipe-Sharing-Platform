@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { fetchRecipes, deleteRecipe } from "../../services/api"; 
+import { fetchRecipes, deleteRecipe } from "../../services/api";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import "./UserRecipes.css";
 
 function UserRecipes() {
+  const { user } = useContext(AuthContext); // Access the logged-in user
+  const { theme } = useContext(ThemeContext); // Access context values
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [sortBy, setSortBy] = useState("title");
 
+
   // Fetch recipes using the API
   useEffect(() => {
     const loadRecipes = async () => {
       try {
-        const data = await fetchRecipes(); // Use the fetchRecipes function from api.js
+        const data = await fetchRecipes(user.id); // Fetch recipes for the logged-in user
         setRecipes(data);
       } catch (error) {
         console.error("Error fetching recipes:", error);
@@ -22,9 +27,9 @@ function UserRecipes() {
         setLoading(false);
       }
     };
-
     loadRecipes();
-  }, []);
+  }, [user.id]); // Re-fetch recipes if the user changes
+
 
   // Filter and sort recipes
   const filteredRecipes = recipes
@@ -68,105 +73,107 @@ function UserRecipes() {
   }
 
   return (
-    <div className="user-recipes-container">
-      <div className="user-recipes-header">
-        <h1>My Recipes</h1>
-        <Link to="/addRecipe" className="add-recipe-button">
-          <span className="material-icons">add</span>
-          Add New Recipe
-        </Link>
-      </div>
+    <div className={`bodyUR ${theme}`}>
+      <div className="user-recipes-container">
+        <div className="user-recipes-header">
+          <h1>My Recipes</h1>
+          <Link to="/addRecipe" className="add-recipe-button">
+            <span className="material-icons">add</span>
+            Add New Recipe
+          </Link>
+        </div>
 
-      <div className="user-recipes-controls">
-        <div className="search-filter">
-          <div className="search-bar">
-            <span className="material-icons">search</span>
-            <input
-              type="text"
-              placeholder="Search your recipes..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="filter-sort-controls">
-            <div className="filter-control">
-              <label htmlFor="category-filter">Category:</label>
-              <select
-                id="category-filter"
-                value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value)}
-              >
-                <option value="all">All Categories</option>
-                <option value="breakfast">Breakfast</option>
-                <option value="lunch">Lunch</option>
-                <option value="dinner">Dinner</option>
-                <option value="dessert">Dessert</option>
-                <option value="snack">Snack</option>
-                <option value="beverage">Beverage</option>
-              </select>
+        <div className="user-recipes-controls">
+          <div className="search-filter">
+            <div className="search-bar">
+              <span className="material-icons">search</span>
+              <input
+                type="text"
+                placeholder="Search your recipes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
-            <div className="sort-control">
-              <label htmlFor="sort-by">Sort by:</label>
-              <select id="sort-by" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                <option value="title">Title (A-Z)</option>
-                <option value="category">Category</option>
-                <option value="cookingTime">Cooking Time</option>
-              </select>
+            <div className="filter-sort-controls">
+              <div className="filter-control">
+                <label htmlFor="category-filter">Category:</label>
+                <select
+                  id="category-filter"
+                  value={filterCategory}
+                  onChange={(e) => setFilterCategory(e.target.value)}
+                >
+                  <option value="all">All Categories</option>
+                  <option value="breakfast">Breakfast</option>
+                  <option value="lunch">Lunch</option>
+                  <option value="dinner">Dinner</option>
+                  <option value="dessert">Dessert</option>
+                  <option value="snack">Snack</option>
+                  <option value="beverage">Beverage</option>
+                </select>
+              </div>
+              <div className="sort-control">
+                <label htmlFor="sort-by">Sort by:</label>
+                <select id="sort-by" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                  <option value="title">Title (A-Z)</option>
+                  <option value="category">Category</option>
+                  <option value="cookingTime">Cooking Time</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {filteredRecipes.length > 0 ? (
-        <div className="recipes-table-container">
-          <table className="recipes-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Cooking Time</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredRecipes.map((recipe) => (
-                <tr key={recipe.id}>
-                  <td className="recipe-title-cell">
-                    <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
-                  </td>
-                  <td>
-                    <span className={`category-badge ${recipe.category}`}>{recipe.category}</span>
-                  </td>
-                  <td>{recipe.cookingTime}</td>
-                  <td>
-                    <div className="action-buttons">
-                      <Link to={`/editRecipe/${recipe.id}`} className="action-button edit">
-                        <span className="material-icons">edit</span>
-                      </Link>
-                      <button
-                        className="action-button delete"
-                        onClick={() => handleDeleteRecipe(recipe.id)}
-                      >
-                        <span className="material-icons">delete</span>
-                      </button>
-                    </div>
-                  </td>
+        {filteredRecipes.length > 0 ? (
+          <div className="recipes-table-container">
+            <table className="recipes-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Cooking Time</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <div className="no-recipes">
-          <span className="material-icons">restaurant_menu</span>
-          <h3>No recipes found</h3>
-          <p>
-            {searchTerm || filterCategory !== "all"
-              ? "Try adjusting your search or filter criteria"
-              : "You haven't added any recipes yet. Click 'Add New Recipe' to get started!"}
-          </p>
-        </div>
-      )}
+              </thead>
+              <tbody>
+                {filteredRecipes.map((recipe) => (
+                  <tr key={recipe.id}>
+                    <td className="recipe-title-cell">
+                      <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
+                    </td>
+                    <td>
+                      <span className={`category-badge ${recipe.category}`}>{recipe.category}</span>
+                    </td>
+                    <td>{recipe.cookingTime}</td>
+                    <td>
+                      <div className="action-buttons">
+                        <Link to={`/editRecipe/${recipe.id}`} className="action-button edit">
+                          <span className="material-icons">edit</span>
+                        </Link>
+                        <button
+                          className="action-button delete"
+                          onClick={() => handleDeleteRecipe(recipe.id)}
+                        >
+                          <span className="material-icons">delete</span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="no-recipes">
+            <span className="material-icons">restaurant_menu</span>
+            <h3>No recipes found</h3>
+            <p>
+              {searchTerm || filterCategory !== "all"
+                ? "Try adjusting your search or filter criteria"
+                : "You haven't added any recipes yet. Click 'Add New Recipe' to get started!"}
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

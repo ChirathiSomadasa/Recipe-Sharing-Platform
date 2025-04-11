@@ -1,116 +1,185 @@
 /* General Styles */
 a {
-    text-decoration: none;
-    color: inherit;
-  }
-  button {
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-family: inherit;
-  }
-  
-  /* Header Styles */
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 40;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+/* Header Styles */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Left Side */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 18px;
+  color: #f4a405;
+}
+
+/* Header Right */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.desktop-menu {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Buttons */
+.text-button-login {
+  padding: 8px 22px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.text-button-login:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+.text-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.text-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.primary-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #f4a405;
+  color: white;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.primary-button:hover {
+  background-color: #f4a405;
+}
+
+/* Theme Icon Button */
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.icon-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+  color: #555;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
   .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-    padding: 0 16px;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 0 8px;
   }
-  
-  /* Left Side */
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .logo {
-    font-weight: 600;
-    font-size: 18px;
-    color: #f4a405;
-  }
-  
-  /* Header Right */
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .desktop-menu {
-    display: none;
-    align-items: center;
-    gap: 8px;
-  }
-  .mobile-menu {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
- 
-  /* Buttons */
-  .text-button-login {
-    padding: 8px 22px;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: background-color 0.2s;
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  .text-button-login:hover {
-    background-color: rgba(0, 0, 0, 0.09);
-  }
+
   .text-button {
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    padding: 6px 12px;
+    font-size: 14px;
   }
-  .text-button:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
+
   .primary-button {
-    padding: 8px 16px;
-    border-radius: 4px;
-    background-color: #f4a405;
-    color: white;
-    font-weight: 500;
-    transition: background-color 0.2s;
+    padding: 6px 12px;
+    font-size: 14px;
   }
-  .primary-button:hover {
-    background-color: #f4a405;
+
+  .icon-button {
+    padding: 6px;
   }
-   
-  /* Responsive Adjustments */
-  @media (max-width: 480px) {
-    .header-container {
-      padding: 0 8px;
-    }
-    .text-button {
-      padding: 6px 12px;
-      font-size: 14px;
-    }
-    .primary-button {
-      padding: 6px 12px;
-      font-size: 14px;
-    }
+
+  .theme-icon {
+    width: 18px;
+    height: 18px;
   }
-  @media (min-width: 1024px) {
-    .header-container {
-      padding: 0 24px;
-    }
+}
+
+@media (min-width: 1024px) {
+  .header-container {
+    padding: 0 24px;
   }
+
+  .desktop-menu {
+    display: flex;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+}
+
+.header.light {
+  background-color: rgb(255, 255, 255);
+  color: #000000;
+}
+
+.header.dark {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.text-button-login.dark {
+  background-color: #acacac;
+  color: #ffffff;
+}
+
+.text-button.dark {
+  color: #ffffff;
+}

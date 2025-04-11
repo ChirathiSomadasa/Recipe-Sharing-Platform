@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.css'; // Global styles
 import App from './App';
-import { AuthProvider } from './contexts/AuthContext'; 
+import { AuthProvider } from './contexts/AuthContext'; // Import AuthProvider
+import { ThemeProvider } from './contexts/ThemeContext'; // Import ThemeProvider
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider> {/* Wrap the app with AuthProvider */}
-      <App />
+    {/* Wrap the app with both AuthProvider and ThemeProvider */}
+    <AuthProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </AuthProvider>
   </React.StrictMode>
 );
-
-

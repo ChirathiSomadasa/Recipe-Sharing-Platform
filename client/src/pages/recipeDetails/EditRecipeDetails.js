@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchRecipe, updateRecipe } from "../../services/api"; 
+import { fetchRecipe, updateRecipe } from "../../services/api";
+import { ThemeContext } from "../../contexts/ThemeContext"; 
 import "./EditRecipeDetails.css";
 
 function EditRecipeDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const { theme } = useContext(ThemeContext); // Access context values
   const [recipeData, setRecipeData] = useState({
     title: "",
     description: "",
@@ -33,7 +34,6 @@ function EditRecipeDetails() {
     const loadRecipe = async () => {
       try {
         const data = await fetchRecipe(id); // Use the fetchRecipe function from api.js
-
         setRecipeData({
           title: data.title,
           description: data.description,
@@ -52,14 +52,12 @@ function EditRecipeDetails() {
         alert("Failed to load recipe details. Please try again.");
       }
     };
-
     loadRecipe();
   }, [id]);
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const updatedRecipe = {
       ...recipeData,
       ingredients: ingredients.map((item) => item.value).filter(Boolean),
@@ -68,7 +66,6 @@ function EditRecipeDetails() {
       nutrition,
       updatedAt: new Date().toISOString(),
     };
-
     try {
       // Use the updateRecipe function from api.js
       const savedRecipe = await updateRecipe(id, updatedRecipe);
@@ -126,225 +123,255 @@ function EditRecipeDetails() {
   };
 
   return (
-    <div className="add-recipe-container">
-      <div className="add-recipe-header">
-        <h1>Edit Your Recipe</h1>
-        <p>Make changes to your recipe below</p>
-      </div>
-      <form className="add-recipe-form" onSubmit={handleSubmit}>
-        
-        <div className="form-section">
-          <h2>
-            <span className="material-icons">restaurant_menu</span>
-            Basic Information
-          </h2>
-          <div className="formAR-group">
-            <label className="lableAR" htmlFor="title">Recipe Title*</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={recipeData.title}
-              onChange={(e) => setRecipeData({ ...recipeData, title: e.target.value })}
-              required
-            />
-          </div>
-          <div className="formAR-group">
-            <label className="lableAR" htmlFor="description">Description*</label>
-            <textarea
-              id="description"
-              name="description"
-              value={recipeData.description}
-              onChange={(e) => setRecipeData({ ...recipeData, description: e.target.value })}
-              required
-            ></textarea>
-          </div>
-          <div className="formAR-row">
+    <div className={`bodyER ${theme}`}>
+      <div className="add-recipe-container">
+        <div className="add-recipe-header">
+          <h1>Edit Your Recipe</h1>
+          <p>Make changes to your recipe below</p>
+        </div>
+        <form className="add-recipe-form" onSubmit={handleSubmit}>
+          {/* Basic Information Section */}
+          <div className="form-section">
+            <h2>
+              <span className="material-icons">restaurant_menu</span>
+              Basic Information
+            </h2>
             <div className="formAR-group">
-              <label className="lableAR" htmlFor="cookingTime">Cooking Time*</label>
+              <label className="lableAR" htmlFor="title">Recipe Title*</label>
               <input
                 type="text"
-                id="cookingTime"
-                name="cookingTime"
-                value={recipeData.cookingTime}
-                onChange={(e) => setRecipeData({ ...recipeData, cookingTime: e.target.value })}
+                id="title"
+                name="title"
+                value={recipeData.title}
+                onChange={(e) => setRecipeData({ ...recipeData, title: e.target.value })}
                 required
               />
             </div>
             <div className="formAR-group">
-              <label className="lableAR" htmlFor="servings">Servings*</label>
-              <input
-                type="number"
-                id="servings"
-                name="servings"
-                value={recipeData.servings}
-                onChange={(e) => setRecipeData({ ...recipeData, servings: e.target.value })}
-                required
-              />
-            </div>
-            <div className="formAR-group">
-              <label className="lableAR" htmlFor="category">Category*</label>
-              <select
-                id="category"
-                name="category"
-                value={recipeData.category}
-                onChange={(e) => setRecipeData({ ...recipeData, category: e.target.value })}
-                required
-              >
-                <option value="breakfast">Breakfast</option>
-                <option value="lunch">Lunch</option>
-                <option value="dinner">Dinner</option>
-                <option value="dessert">Dessert</option>
-                <option value="snack">Snack</option>
-                <option value="beverage">Beverage</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Image Section */}
-        <div className="form-section">
-          <h2>
-            <span className="material-icons">image</span>
-            Recipe Image
-          </h2>
-          <div className="image-upload-container">
-            {recipeData.imagePreview && <img src={recipeData.imagePreview} alt="Preview" />}
-            <input type="file" id="image" name="image" onChange={handleImageChange} />
-          </div>
-        </div>
-
-        {/* Ingredients Section */}
-        <div className="form-section">
-          <h2>
-            <span className="material-icons">shopping_cart</span>
-            Ingredients
-          </h2>
-          {ingredients.map((ingredient, index) => (
-            <div key={index} className="dynamic-input-row">
-              <input
-                type="text"
-                value={ingredient.value}
-                onChange={(e) =>
-                  handleDynamicFieldChange(setIngredients, index, e.target.value)
-                }
-                placeholder={`Ingredient ${index + 1}`}
-              />
-              <button type="button" onClick={() => removeDynamicField(setIngredients, index)}>
-                Remove
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={() => addDynamicField(setIngredients)}>
-            Add Ingredient
-          </button>
-        </div>
-
-        {/* Instructions Section */}
-        <div className="form-section">
-          <h2>
-            <span className="material-icons">notes</span>
-            Instructions
-          </h2>
-          {instructions.map((instruction, index) => (
-            <div key={index} className="dynamic-input-row">
+              <label className="lableAR" htmlFor="description">Description*</label>
               <textarea
-                value={instruction.value}
-                onChange={(e) =>
-                  handleDynamicFieldChange(setInstructions, index, e.target.value)
-                }
-                placeholder={`Step ${index + 1}`}
+                id="description"
+                name="description"
+                value={recipeData.description}
+                onChange={(e) => setRecipeData({ ...recipeData, description: e.target.value })}
+                required
               ></textarea>
-              <button type="button" onClick={() => removeDynamicField(setInstructions, index)}>
-                Remove
-              </button>
             </div>
-          ))}
-          <button type="button" onClick={() => addDynamicField(setInstructions)}>
-            Add Step
-          </button>
-        </div>
+            <div className="formAR-row">
+              <div className="formAR-group">
+                <label className="lableAR" htmlFor="cookingTime">Cooking Time*</label>
+                <input
+                  type="text"
+                  id="cookingTime"
+                  name="cookingTime"
+                  value={recipeData.cookingTime}
+                  onChange={(e) => setRecipeData({ ...recipeData, cookingTime: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="formAR-group">
+                <label className="lableAR" htmlFor="servings">Servings*</label>
+                <input
+                  type="number"
+                  id="servings"
+                  name="servings"
+                  value={recipeData.servings}
+                  onChange={(e) => setRecipeData({ ...recipeData, servings: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="formAR-group">
+                <label className="lableAR" htmlFor="category">Category*</label>
+                <select
+                  id="category"
+                  name="category"
+                  value={recipeData.category}
+                  onChange={(e) => setRecipeData({ ...recipeData, category: e.target.value })}
+                  required
+                >
+                  <option value="breakfast">Breakfast</option>
+                  <option value="lunch">Lunch</option>
+                  <option value="dinner">Dinner</option>
+                  <option value="dessert">Dessert</option>
+                  <option value="snack">Snack</option>
+                  <option value="beverage">Beverage</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-        {/* Tags Section */}
-        <div className="form-section">
-          <h2>
-            <span className="material-icons">local_offer</span>
-            Tags
-          </h2>
-          <div className="tags-container">
-            {tags.map((tag, index) => (
-              <span key={index} className="tag">
-                {tag}
-                <button type="button" onClick={() => removeTag(tag)}>x</button>
-              </span>
+          {/* Image Section */}
+          <div className="form-section">
+            <h2>
+              <span className="material-icons">image</span>
+              Recipe Image
+            </h2>
+            <div className="image-upload-container">
+              <div className="image-upload-area">
+                {recipeData.imagePreview ? (
+                  <div className="image-preview">
+                    <img src={recipeData.imagePreview} alt="Recipe preview" />
+                    <button
+                      type="button"
+                      className="remove-image-btn"
+                      onClick={() =>
+                        setRecipeData({ ...recipeData, image: "", imagePreview: null })
+                      }
+                    >
+                      <span className="material-icons">delete</span>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="upload-placeholder">
+                    <span className="material-icons">cloud_upload</span>
+                    <p>Drag & drop an image or click to browse</p>
+                    <small>Recommended size: 1200 x 800 pixels, max 5MB</small>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="file-input"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Ingredients Section */}
+          <div className="form-section">
+            <h2>
+              <span className="material-icons">shopping_cart</span>
+              Ingredients
+            </h2>
+            {ingredients.map((ingredient, index) => (
+              <div key={index} className="dynamic-input-row">
+                <input
+                  type="text"
+                  value={ingredient.value}
+                  onChange={(e) =>
+                    handleDynamicFieldChange(setIngredients, index, e.target.value)
+                  }
+                  placeholder={`Ingredient ${index + 1}`}
+                />
+                <button type="button" onClick={() => removeDynamicField(setIngredients, index)}>
+                  Remove
+                </button>
+              </div>
             ))}
+            <button type="button" onClick={() => addDynamicField(setIngredients)}>
+              Add Ingredient
+            </button>
           </div>
-          <input
-            type="text"
-            value={tagInput}
-            onChange={handleTagInputChange}
-            placeholder="Add a tag"
-          />
-          <button type="button" onClick={addTag}>
-            Add Tag
-          </button>
-        </div>
 
-        {/* Nutrition Section */}
-        <div className="form-section">
-          <h2>
-            <span className="material-icons">fitness_center</span>
-            Nutrition Information
-          </h2>
-          <div className="formAR-row">
-            <input
-              type="text"
-              name="calories"
-              value={nutrition.calories}
-              onChange={handleNutritionChange}
-              placeholder="Calories"
-            />
-            <input
-              type="text"
-              name="protein"
-              value={nutrition.protein}
-              onChange={handleNutritionChange}
-              placeholder="Protein"
-            />
-            <input
-              type="text"
-              name="carbs"
-              value={nutrition.carbs}
-              onChange={handleNutritionChange}
-              placeholder="Carbs"
-            />
-            <input
-              type="text"
-              name="fat"
-              value={nutrition.fat}
-              onChange={handleNutritionChange}
-              placeholder="Fat"
-            />
-            <input
-              type="text"
-              name="fiber"
-              value={nutrition.fiber}
-              onChange={handleNutritionChange}
-              placeholder="Fiber"
-            />
+          {/* Instructions Section */}
+          <div className="form-section">
+            <h2>
+              <span className="material-icons">notes</span>
+              Instructions
+            </h2>
+            {instructions.map((instruction, index) => (
+              <div key={index} className="dynamic-input-row">
+                <textarea
+                  value={instruction.value}
+                  onChange={(e) =>
+                    handleDynamicFieldChange(setInstructions, index, e.target.value)
+                  }
+                  placeholder={`Step ${index + 1}`}
+                ></textarea>
+                <button type="button" onClick={() => removeDynamicField(setInstructions, index)}>
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button type="button" onClick={() => addDynamicField(setInstructions)}>
+              Add Step
+            </button>
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="formAR-actions">
-          <button type="button" className="cancel-btn" onClick={() => navigate("/")}>
-            Cancel
-          </button>
-          <button type="submit" className="submitAR-btn">
-            Update Recipe
-          </button>
-        </div>
-      </form>
+          {/* Tags Section */}
+          <div className="form-section">
+            <h2>
+              <span className="material-icons">local_offer</span>
+              Tags
+            </h2>
+            <div className="tags-container">
+              {tags.map((tag, index) => (
+                <span key={index} className="tag">
+                  {tag}
+                  <button type="button" onClick={() => removeTag(tag)}>x</button>
+                </span>
+              ))}
+            </div>
+            <input
+              type="text"
+              value={tagInput}
+              onChange={handleTagInputChange}
+              placeholder="Add a tag"
+            />
+            <button type="button" onClick={addTag}>
+              Add Tag
+            </button>
+          </div>
+
+          {/* Nutrition Section */}
+          <div className="form-section">
+            <h2>
+              <span className="material-icons">fitness_center</span>
+              Nutrition Information
+            </h2>
+            <div className="formAR-row">
+              <input
+                type="text"
+                name="calories"
+                value={nutrition.calories}
+                onChange={handleNutritionChange}
+                placeholder="Calories"
+              />
+              <input
+                type="text"
+                name="protein"
+                value={nutrition.protein}
+                onChange={handleNutritionChange}
+                placeholder="Protein"
+              />
+              <input
+                type="text"
+                name="carbs"
+                value={nutrition.carbs}
+                onChange={handleNutritionChange}
+                placeholder="Carbs"
+              />
+              <input
+                type="text"
+                name="fat"
+                value={nutrition.fat}
+                onChange={handleNutritionChange}
+                placeholder="Fat"
+              />
+              <input
+                type="text"
+                name="fiber"
+                value={nutrition.fiber}
+                onChange={handleNutritionChange}
+                placeholder="Fiber"
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="formAR-actions">
+            <button type="button" className="cancel-btn" onClick={() => navigate("/")}>
+              Cancel
+            </button>
+            <button type="submit" className="submitAR-btn">
+              Update Recipe
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,13 @@
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5000'; // Base URL for the mock API
-  
-// Fetch all recipes
-export const fetchRecipes = async () => {
+
+// Fetch recipes for a specific user
+export const fetchRecipes = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/recipes`);
+    const response = await axios.get(`${API_URL}/recipes`, {
+      params: { userId }, // Send userId as a query parameter
+    });
     return response.data;
   } catch (error) {
     throw error;
@@ -23,9 +25,9 @@ export const fetchRecipe = async (recipeId) => {
 };
 
 // Add a new recipe
-export const addRecipe = async (newRecipe) => {
+export const addRecipe = async (newRecipe, userId) => {
   try {
-    const response = await axios.post(`${API_URL}/recipes`, newRecipe);
+    const response = await axios.post(`${API_URL}/recipes`, { ...newRecipe, userId });
     return response.data;
   } catch (error) {
     throw error;
