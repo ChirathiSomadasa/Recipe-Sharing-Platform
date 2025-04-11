@@ -19,19 +19,19 @@ export const AuthProvider = ({ children }) => {
 
   const login = (email, password) => {
     console.log('Attempting to log in with email:', email);
-  
+
     // Retrieve users from local storage
     const users = JSON.parse(localStorage.getItem('users')) || [];
     console.log('Users in local storage:', users);
-  
+
     // Find the user by email
     const foundUser = users.find((u) => u.email === email.trim());
     console.log('Found user:', foundUser);
-  
+
     if (foundUser) {
       console.log('Entered password:', password);
       console.log('Stored password:', foundUser.password);
-  
+
       // Validate the password
       if (foundUser.password === password) {
         setUser(foundUser); // Set the user in state
